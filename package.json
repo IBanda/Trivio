@@ -8,8 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "pre-commit": "lint-staged",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "format": "prettier . --write"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "react": "17.0.2",

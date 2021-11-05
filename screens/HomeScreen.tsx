@@ -3,12 +3,13 @@ import CategoryCard, {Category} from '../components/CategoryCard';
 import React from 'react';
 import {categories} from '../data/categories';
 
-const renderItem: ListRenderItem<Category> = ({item}) => (
+const renderItem: ListRenderItem<Category> = ({item, index}) => (
   <View style={styles.renderItemContainer}>
     <CategoryCard
       title={item.title}
       icon={item.icon}
       gradientColors={item.gradientColors}
+      delay={index * 100}
     />
   </View>
 );
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     letterSpacing: -1,
     marginLeft: 10,
+    marginTop: 20,
   },
   smText: {
     marginLeft: 10,

@@ -24,7 +24,7 @@ export default function CategoryCard({
   icon,
   title,
   gradientColors,
-  delay,
+  delay = 0,
 }: Props) {
   const {width} = useWindowDimensions();
   const translateX = useRef(new Animated.Value(-width)).current;
@@ -44,7 +44,8 @@ export default function CategoryCard({
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
         colors={gradientColors}
-        style={styles.linearGradient}>
+        style={styles.linearGradient}
+      >
         <View>
           <Pressable style={styles.pressable}>
             <Image

@@ -8,15 +8,36 @@
  * @format
  */
 
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {ImageSourcePropType, StyleSheet, View} from 'react-native';
 import Home from './screens/HomeScreen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import QuizPage from './screens/QuizPage';
+
+export type RootStackParamList = {
+  Home: undefined;
+  Quiz: {
+    categoryId: number;
+    background: string;
+    image: ImageSourcePropType;
+  };
+};
 
 export default function App() {
+  const {Navigator, Screen, Group} =
+    createNativeStackNavigator<RootStackParamList>();
   return (
-    <SafeAreaView style={styles.app}>
-      <Home />
-    </SafeAreaView>
+    <NavigationContainer>
+      <View style={styles.app}>
+        <Navigator>
+          <Group screenOptions={{headerShown: false}}>
+            <Screen name="Home" component={Home} />
+            <Screen name="Quiz" component={QuizPage} />
+          </Group>
+        </Navigator>
+      </View>
+    </NavigationContainer>
   );
 }
 

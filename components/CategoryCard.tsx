@@ -11,20 +11,22 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-export interface Category {
+export interface CategoryCardInterface {
   icon: ImageSourcePropType;
   title: string;
   gradientColors: string[];
   delay?: number;
+  onPress: () => void;
 }
 
-interface Props extends Category {}
+interface Props extends CategoryCardInterface {}
 
 export default function CategoryCard({
   icon,
   title,
   gradientColors,
   delay = 0,
+  onPress,
 }: Props) {
   const {width} = useWindowDimensions();
   const translateX = useRef(new Animated.Value(-width)).current;
@@ -46,7 +48,7 @@ export default function CategoryCard({
         colors={gradientColors}
         style={styles.linearGradient}>
         <View>
-          <Pressable style={styles.pressable}>
+          <Pressable style={styles.pressable} onPress={onPress}>
             <Image
               style={styles.pressableImg}
               source={require('../images/play-front-clay.png')}
@@ -65,7 +67,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     shadowColor: '#000',
     shadowOpacity: 0.2,
-    shadowRadius: 10,
+    shadowRadius: 5,
     shadowOffset: {
       width: 0,
       height: 10,
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 30,
     paddingHorizontal: 30,
     borderRadius: 20,
     position: 'relative',
@@ -108,6 +110,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     position: 'absolute',
+    zIndex: 10,
     right: 5,
     top: -50,
   },

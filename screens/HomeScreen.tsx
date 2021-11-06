@@ -1,44 +1,68 @@
-import {StyleSheet, View, FlatList, Text, ListRenderItem} from 'react-native';
-import CategoryCard, {Category} from '../components/CategoryCard';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  ListRenderItem,
+  SafeAreaView,
+} from 'react-native';
+import CategoryCard from '../components/CategoryCard';
 import React from 'react';
-import {categories} from '../data/categories';
+import {categories, Category} from '../data/categories';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../App';
+import CustomHeader from '../components/CustomHeader';
 
-const renderItem: ListRenderItem<Category> = ({item, index}) => (
-  <View style={styles.renderItemContainer}>
-    <CategoryCard
-      title={item.title}
-      icon={item.icon}
-      gradientColors={item.gradientColors}
-      delay={index * 100}
-    />
-  </View>
-);
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-export default function Home() {
+export default function Home({navigation}: Props) {
+  const renderItem: ListRenderItem<Category> = ({item, index}) => (
+    <View style={styles.renderItemContainer}>
+      <CategoryCard
+        title={item.title}
+        icon={item.icon}
+        gradientColors={item.gradientColors}
+        delay={index * 100}
+        onPress={() =>
+          navigation.navigate('Quiz', {
+            categoryId: item.id,
+            background: item.gradientColors[1],
+            image: item.icon,
+          })
+        }
+      />
+    </View>
+  );
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>let's play</Text>
-      <Text style={styles.smText}>Pick a category</Text>
+    <SafeAreaView style={styles.container}>
+      {/* <View style={styles.textWrapper}> */}
+      <CustomHeader>
+        <Text style={styles.text}>let's play</Text>
+        <Text style={styles.smText}>Pick a category</Text>
+      </CustomHeader>
+      {/* </View> */}
       <FlatList
         style={styles.flatList}
         renderItem={renderItem}
         data={categories}
         keyExtractor={item => item.title}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
     backgroundColor: '#FFF',
+  },
+  textWrapper: {
+    paddingHorizontal: 20,
   },
   flatList: {
     flex: 1,
-    paddingTop: 50,
-    paddingHorizontal: 10,
+    paddingTop: 30,
+    paddingHorizontal: 20,
   },
   renderItemContainer: {
     marginBottom: 50,
@@ -49,13 +73,11 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     fontWeight: '800',
     letterSpacing: -1,
-    marginLeft: 10,
-    marginTop: 20,
+    // marginTop: 20,
   },
   smText: {
-    marginLeft: 10,
     letterSpacing: -1,
     color: '#FF7777',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
 });
